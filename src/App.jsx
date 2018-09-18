@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import route from './routes';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -35,6 +36,7 @@ class App extends Component {
     const { classes } = this.props;
     return (
       <div className="App">
+        {route}
 
          <TextField
           id="name"
