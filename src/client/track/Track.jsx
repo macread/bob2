@@ -3,6 +3,7 @@ import Board from 'react-trello';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import JobDetail from './JobDetail';
 
 const styles = theme => ({
   container: {
@@ -26,13 +27,25 @@ const data = {
       title: 'Maybe',
       label: '2/2',
       cards: [
-        {id: 'Card1', title: 'Write Blog', description: 'Can AI make memes', label: '30 mins'},
-        {id: 'Card2', title: 'Pay Rent', description: 'Transfer via NEFT', label: '5 mins', metadata: {sha: 'be312a1'}}
+        {id: 'Card1', title: 'DevMountain', description: 'Primary Developer', label: 'A'},
+        {id: 'Card2', title: 'Berkadia', description: 'MERN Stack Developer', label: 'A'}
       ]
     },
     {
       id: 'applied',
       title: 'Applied',
+      label: '0/0',
+      cards: []
+    },
+    {
+      id: 'phone',
+      title: 'Phone',
+      label: '0/0',
+      cards: []
+    },
+    {
+      id: 'challenge',
+      title: 'Code Challenge',
       label: '0/0',
       cards: []
     },
@@ -57,30 +70,45 @@ const data = {
   ]
 }
 
-function handleNewCard(card, laneId){
-  alert(`Card: ${card} was added to lane: ${laneId}`)
-}
 
 class Track extends Component {
-    render() {
-      const { classes } = this.props;
 
-
-      return (
-        <div className='Track'>
-          <Button variant="contained" color="primary" className={classes.button}>
-            New Track
-          </Button>
-          <Board data={data} 
-            draggable
-            editable
-            onCardAdd={handleNewCard}
-            onCardClick={(cardId, metadata, laneId) => alert(`Card with id:${cardId} clicked. Card in lane: ${laneId}`)}
-          />
-        </div>
-      )
+  constructor() {
+    super()
+    
+    this.state = {
+      openJobDetail: false,
     }
   }
+
+  handleNewCard(card, laneId){
+    alert(`Card: ${card} was added to lane: ${laneId}`)
+  }
+
+  handleCardClick(cardId, metadata, laneId){
+    // this.setState({ openJobDetail: true })
+    alert(`Card: ${cardId} was clicked on lane: ${laneId}`)
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className='Track'>
+        <Button variant="contained" color="primary" className={classes.button}>
+          New Track
+        </Button>
+        <Board data={data} 
+          draggable
+          editable
+          onCardAdd={this.handleNewCard}
+          onCardClick={this.handleCardClick}
+        />
+        <JobDetail open={this.state.openJobDetail} />
+      </div>
+    )
+  }
+}
 
 
   Track.propTypes = {
