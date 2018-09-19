@@ -7,37 +7,28 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default class FormDialog extends React.Component {
+import { closeJobDetail } from '../../dux/reducer'
+import { connect } from 'react-redux';
 
-    constructor() {
-        super()
-        
-        this.state = {
-          open: false,
-        }
-      }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+class FormDialog extends React.Component {
 
   render() {
     return (
       <div>
         <Dialog
-          open={this.state.open}
+          open={this.props.openJobDetail}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Job Application</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
+              <p>id: {this.props.card.id}</p>
+              <p>title: {this.props.card.title}</p>
+              <p>description: {this.props.card.description}</p>
+              <p>label: {this.props.card.label}</p>
+              <p>metadata: {JSON.stringify(this.props.metadata)}</p>
             </DialogContentText>
             <TextField
               autoFocus
@@ -49,10 +40,10 @@ export default class FormDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.closeJobDetail} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.closeJobDetail} color="primary">
               Subscribe
             </Button>
           </DialogActions>
@@ -61,3 +52,12 @@ export default class FormDialog extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+    return{
+        openJobDetail: state.openJobDetail,
+        card: state.card
+    }
+}
+
+export default (connect(mapStateToProps, { closeJobDetail })(FormDialog));
