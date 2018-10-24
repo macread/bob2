@@ -49,7 +49,7 @@ class FormDialog extends React.Component {
           </DialogActions>
         </Dialog>
       </div>
-    );
+    )
   }
 }
 
